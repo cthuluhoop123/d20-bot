@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/ZhongDev/d20-bot/issues"
   },
-  "homepage": "https://github.com/ZhongDev/d20-bot#readme"
+  "homepage": "https://github.com/ZhongDev/d20-bot#readme",
+  "dependencies": {
+    "discord.js": "^11.5.1",
+    "dotenv": "^8.1.0"
+  }
 }
