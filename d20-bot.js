@@ -1,6 +1,6 @@
 /// requires
 require('dotenv').config()
-const DEBUG = process.env.TOKEN || false
+const DEBUG = process.env.DEBUG || false
 const TOKEN = process.env.TOKEN
 const PREFIX = process.env.PREFIX || '!'
 const Discord = require('discord.js')
