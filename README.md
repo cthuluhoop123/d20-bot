@@ -2,7 +2,7 @@
 # d20-bot
 DiscordJS Dice Bot for Dungeons and Dragons
 
-General Commands
+Commands
 =====
 *  ```!ping```: Pings bot<br>
 *  ```!roll (dice notation)```: Roll a dice with dnd dice notation. Any duplicate dice (i.e. 2d4 d4) will be added together (i.e. 3d4).
