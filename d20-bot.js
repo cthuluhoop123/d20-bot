@@ -61,7 +61,7 @@ client.on('message', message => {
                 message.reply("There are no dice to roll! Please check your notation.")
                 return
             }
-            message.reply(reply)
+            message.reply("\n" + reply)
             return
     }
 })
