@@ -27,41 +27,9 @@ client.on('message', message => {
             return
 
         case `${PREFIX}roll`:
-            let diceobj = parseNotation(args)
-            if (diceobj.failed){
-                message.reply('The notation seems to be malformed. Please check your command and try again.')
-                if (DEBUG) {message.reply('Error code: ' + diceobj.errorcode)}
-                return 
-            }
             let reply = ""
-            for (let [dicevalue, count] of Object.entries(diceobj.counts)){
-                if(count < 1){
-                    continue
-                }
-                let rolledValues = []
-                for (i = 0; i < count; i++) {
-                    rolledValues.push(Math.ceil(Math.random()*dicevalue))
-                }
-                let valuesString = ""
-                for (let value of rolledValues){
-                    valuesString += "  `" + value + "`"
-                }
-                if(count == 1){
-                    count = ""
-                }
-                reply += count + "d" + dicevalue + ":" + valuesString + "\n"
-            }
-            if (reply == ""){
-                message.reply("There are no dice to roll! Please check your notation.")
-                return
-            }
-            message.reply("\n" + reply)
-            return
-
-        case `${PREFIX}inorder`:
-            let inorderreply = ""
             for (let arg of args){
-                let diceobj = parseSingleNotation(arg)
+                let diceobj = parseNotation(arg)
                 if (diceobj.failed){
                     message.reply('The notation seems to be malformed. Please check your command and try again.')
                     if (DEBUG) {message.reply('Error code: ' + diceobj.errorcode)}
@@ -82,65 +50,19 @@ client.on('message', message => {
                     if(count == 1){
                         count = ""
                     }
-                    inorderreply += count + "d" + dicevalue + ":" + valuesString + "\n"
+                    reply += count + "d" + dicevalue + ":" + valuesString + "\n"
                 }
             }
-            if (inorderreply == ""){
+            if (reply == ""){
                 message.reply("There are no dice to roll! Please check your notation.")
                 return
             }
-            message.reply("\n" + inorderreply)
+            message.reply("\n" + reply)
             return
     }
 })
 
-function parseNotation(args){
-    var diceobj = {
-        failed: false,
-        errorcode: 0,
-        counts: {
-            "100": 0,
-            "20": 0,
-            "12": 0,
-            "10": 0,
-            "8": 0,
-            "6": 0,
-            "4": 0
-        }
-    }
-
-    for (let arg of args) {
-        let notationSplit = arg.split(/[Dd]/)
-        let numberOfDice = 1;
-
-        if (notationSplit[0] != ""){
-            if (isNaN(notationSplit[0]) || notationSplit[0]<0){
-                diceobj.failed = true
-                diceobj.errorcode = 1
-                return diceobj
-            }
-            numberOfDice = parseInt(notationSplit[0])
-        }
-
-        if (isNaN(notationSplit[1])){
-            diceobj.failed = true
-            diceobj.errorcode = 2
-            return diceobj
-        }
-
-        if (validDice.includes(parseInt(notationSplit[1])) && notationSplit[1] != ""){
-            diceobj.counts[notationSplit[1]] += numberOfDice
-        }else{
-            diceobj.failed = true
-            diceobj.errorcode = 3
-            return diceobj
-        }
-    }
-
-    return diceobj
-}
-
-function parseSingleNotation(notation){
+function parseNotation(notation){
     var diceobj = {
         failed: false,
         errorcode: 0,
