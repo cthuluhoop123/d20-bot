@@ -50,7 +50,7 @@ client.on('message', message => {
                 }
                 let valuesString = ""
                 for (let value of rolledValues){
-                    valuesString += " `" + value + "`"
+                    valuesString += "  `" + value + "`"
                 }
                 if(count == 1){
                     count = ""
@@ -89,7 +89,7 @@ client.on('message', message => {
                     }
                     let valuesString = ""
                     for (let value of rolledValues){
-                        valuesString += " `" + value + "`"
+                        valuesString += "  `" + value + "`"
                     }
                     if(count == 1){
                         count = ""
