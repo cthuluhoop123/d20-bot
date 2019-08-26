@@ -1,5 +1,6 @@
 /// requires
 require('dotenv').config()
+const DEBUG = process.env.TOKEN || false
 const TOKEN = process.env.TOKEN
 const PREFIX = process.env.PREFIX || '!'
 const Discord = require('discord.js')
@@ -24,8 +25,9 @@ client.on('message', message => {
 
         case `${PREFIX}roll`:
             let diceobj = parseNotation(args)
-            if(diceobj.failed){
+            if (diceobj.failed){
                 message.reply('The notation seems to be malformed. Please check your command and try again.')
+                if (DEBUG) {message.reply('Error code: ' + diceobj.errorcode)}
                 return 
             }
             let reply = ""
@@ -41,11 +43,14 @@ client.on('message', message => {
                     multiplier = 10
                 }
                 for (i = 0; i < count; i++) {
-                    rolledValue.push(Math.ceil(Math.random()*dicecount)*multiplier)
+                    rolledValues.push(Math.ceil(Math.random()*dicecount)*multiplier)
                 }
                 let valuesString = ""
                 for (let value of rolledValues){
                     valuesString += " `" + value + "`"
+                }
+                if(count == 1){
+                    count = ""
                 }
                 reply += count + "d" + dicevalue + ":" + valuesString + "\n"
             }
@@ -61,6 +66,7 @@ client.on('message', message => {
 function parseNotation(args){
     var diceobj = {
         failed: false,
+        errorcode: 0,
         counts: {
             "100": 0,
             "20": 0,
@@ -79,6 +85,7 @@ function parseNotation(args){
         if (notationSplit[0] != ""){
             if (isNaN(notationSplit[0]) || notationSplit[0]<0){
                 diceobj.failed = true
+                diceobj.errorcode = 1
                 return diceobj
             }
             numberOfDice = parseInt(notationSplit[0])
@@ -86,13 +93,15 @@ function parseNotation(args){
 
         if (isNaN(notationSplit[1])){
             diceobj.failed = true
+            diceobj.errorcode = 2
             return diceobj
         }
 
-        if (notationSplit[1] in validDice && notationSplit[1] != ""){
+        if (validDice.includes(parseInt(notationSplit[1])) && notationSplit[1] != ""){
             diceobj.counts[notationSplit[1]] += numberOfDice
         }else{
             diceobj.failed = true
+            diceobj.errorcode = 3
             return diceobj
         }
     }
