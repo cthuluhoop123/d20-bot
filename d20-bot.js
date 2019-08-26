@@ -39,14 +39,8 @@ client.on('message', message => {
                     continue
                 }
                 let rolledValues = []
-                let dicecount = dicevalue
-                let multiplier = 1
-                if (dicevalue == "100"){
-                    dicecount = 10
-                    multiplier = 10
-                }
                 for (i = 0; i < count; i++) {
-                    rolledValues.push(Math.ceil(Math.random()*dicecount)*multiplier)
+                    rolledValues.push(Math.ceil(Math.random()*dicevalue))
                 }
                 let valuesString = ""
                 for (let value of rolledValues){
@@ -78,14 +72,8 @@ client.on('message', message => {
                         continue
                     }
                     let rolledValues = []
-                    let dicecount = dicevalue
-                    let multiplier = 1
-                    if (dicevalue == "100"){
-                        dicecount = 10
-                        multiplier = 10
-                    }
                     for (i = 0; i < count; i++) {
-                        rolledValues.push(Math.ceil(Math.random()*dicecount)*multiplier)
+                        rolledValues.push(Math.ceil(Math.random()*dicevalue))
                     }
                     let valuesString = ""
                     for (let value of rolledValues){
