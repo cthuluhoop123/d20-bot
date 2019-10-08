@@ -9,6 +9,8 @@ const client = new Discord.Client()
 /// Global Variables
 const validDice = [4,6,8,10,12,20,100]
 
+client.on('error', console.error);
+
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`)
     client.generateInvite(['SEND_MESSAGES', 'MANAGE_GUILD', 'MENTION_EVERYONE'])
