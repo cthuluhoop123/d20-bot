@@ -65,7 +65,7 @@ client.on('message', message => {
 })
 
 function parseNotation(notation){
-    var diceobj = {
+    const diceobj = {
         failed: false,
         errorcode: 0,
         counts: {
